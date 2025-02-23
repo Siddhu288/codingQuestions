@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header, footer {
+      background-color: rgb(159, 252, 252);
+    }
+    .header-text {
+      color: black;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-gap: 30px;
+      padding: 20px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+    }
+    
+.grid-item {
+    text-align: center;
+    color: white;
+    border: 2px solid #ccc; /* Border around grid item */
+    border-radius: 10px;
+    
+    overflow: hidden; /* Prevent overflow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.grid-item img {
+    width: 80%; /* Make the image fill the container */
+    max-width: 100px;
+    transition: transform 0.3s ease; /* Smooth image transition */
+}
+
+/* Hover effect */
+.grid-item:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.05); /* Scale up the grid item */
+    box-shadow: 0 4px 15px rgba(1, 218, 229, 0.595); /* Add shadow on hover */
+}
+
+    /* Responsive Styles */
+    @media (min-width :1025px){
+      /* 4 columns on desktop */
+      .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    @media (max-width:1024px) and (min-width :780px){
+      /* 4 columns on desktop */
+      .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 779px) and (min-width: 320px) {
+      /* 2 columns on tablet */
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 319px) {
+      /* 1 column on mobile */
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    h1{
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="d-flex justify-content-between align-items-center p-3">
+    <div class="header-text">
+      <h1>Hello Coder</h1>
+      <p>Let's start</p>
+    </div>
+    <h1 style="color: black; text-align: center;"><b>Company wise Leetcode Problems</b></h1>
+    <nav>
+      <a href="index.html" class="btn btn-outline-dark">Home</a>
+    </nav>
+  </header>
+
+  <!-- Main Content: Grid of Companies -->
+  <main class="container my-4">
+    
+    <div class="grid-container" id="grid-container">
+      <!-- Add more companies as needed -->
+    </div>
+  </main>
+
+  <!-- <script>
+    function navigateToCompany(companyName) {
+      // Navigate to company.html and pass the company name in the URL query parameter
+      window.location.href = `company.html?company=${companyName}`;
+    }
+  </script> -->
+
+  <script>
+    // Fetch the external JSON file
+    fetch('coding_questions1.json')
+      .then(response => response.json())  // Convert the response to JSON
+      .then(companiesData => {
+        displayCompanies(companiesData);  // Pass the data to the display function
+      })
+      .catch(error => console.error('Error loading JSON:', error));
+
+    function displayCompanies(companiesData) {
+      const gridContainer = document.getElementById('grid-container');
+      gridContainer.innerHTML = ''; // Clear any existing content
+
+      // Iterate over company names in JSON
+      for (const companyName in companiesData) {
+        const gridItem = document.createElement('div');
+        gridItem.classList.add('grid-item');
+        gridItem.onclick = function() {
+          navigateToCompany(companyName);
+        };
+
+        // Add company name as h1 and p
+        gridItem.innerHTML = `<h1><b>${companyName.charAt(0).toUpperCase() + companyName.slice(1)}</b></h1>
+                              <p>${companyName}</p>`;
+
+        // Append the new grid item to the grid container
+        gridContainer.appendChild(gridItem);
+      }
+    }
+
+    function navigateToCompany(companyName) {
+      // Navigate to company.html and pass the company name in the URL query parameter
+      window.location.href = `company.html?company=${companyName}`;
+    }
+  </script>
+  
+  
+    <!-- Footer -->
+    <footer class="text-center p-3">
+      <p>&copy; 2024 All rights reserved.</p>
+    </footer>
+
+
+</body>
+</html>
